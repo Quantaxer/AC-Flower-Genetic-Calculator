@@ -1,43 +1,25 @@
-let express = require('express');
+let express = require("express");
+const geneModule = require("../scripts/calculateGenes");
+
 let router = express.Router();
 
-const mysql = require('promise-mysql');
-
-let connectionOptions = {
-  host: process.env.MYSQL_HOST_IP,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE
-};
-
-let connection = null;
-
 /* GET home page. */
-router.get('/', async function(req, res, next) {
-  res.send({msg: "this is the home page"});
+router.get("/", async function (req, res, next) {
+  res.send({ msg: "this is the API home page" });
 });
 
-router.get('/connectToDB', async function(req, res, next) {
-  //Connect to the database
+router.post("/calculateChild", async function (req, res, next) {
   try {
-    connection = await mysql.createConnection(connectionOptions);
-    res.send({msg: "Success"});
-  }
-  catch(error) {
-    res.status(500);
-    res.send({err: error});
-  }
-});
+    let flower1 = req.body.flower1;
+    let flower2 = req.body.flower2;
 
-router.get('/queryDB', async function(req, res, next) {
-  //Connect to the database
-  try {
-    let result = await connection.query(`select * from \`flower-db\``);
-    res.send({msg: result});
-  }
-  catch(error) {
+    let results = geneModule.breedFlowers(flower1, flower2);
+    let frequencyResults = geneModule.calculateFrequencyOfOffspring(results);
+
+    res.send({ msg: frequencyResults });
+  } catch (error) {
     res.status(500);
-    res.send({err: error})
+    res.send({ err: error });
   }
 });
 

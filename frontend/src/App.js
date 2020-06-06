@@ -16,7 +16,7 @@ state = {
   }
 
   callBackendAPI = async () => {
-    const response = await fetch('/connectToDB');
+    const response = await fetch('/db/connectToDB');
     const body = await response.json();
 
     if (response.status !== 200 || response.status !== 200) {
