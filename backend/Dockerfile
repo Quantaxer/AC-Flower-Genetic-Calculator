@@ -11,8 +11,5 @@ COPY . /app
 
 RUN npm install --silent
 
-# add app
-COPY . ./
-
 # start app
 CMD ["npm", "start"]
