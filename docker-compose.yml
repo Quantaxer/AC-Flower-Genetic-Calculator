@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+    mysql:
+        image: mariadb
+        environment:
+            - MYSQL_ROOT_PASSWORD=password
+            - MYSQL_USER=user
+            - MYSQL_PASSWORD=password
+            - MYSQL_DATABASE=flowerdb
+        volumes:
+            - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    backend:
+        build: ./backend
+        ports:
+            - 5000:5000
+        volumes:
+            - ./backend:/app
+        links:
+            - mysql
+        networks: 
+            default: {}
+        command: npm start
+    frontend:
+        build: ./frontend
+        stdin_open: true
+        ports:
+            - 3000:3000
+        volumes:
+            - ./frontend/src:/app/src
+            - /app/node_modules
+        links:
+            - backend
+        networks: 
+            default: {}
+        command: npm start
+networks:
+    default:
+        attachable: true
