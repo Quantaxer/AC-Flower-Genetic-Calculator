@@ -15,6 +15,7 @@ services:
         restart: unless-stopped
         volumes:
             - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+            - ./db/populate_db.csv:/var/lib/populate_db.csv
         ports:
             - 4000:3306
     backend:
@@ -48,3 +49,5 @@ services:
 networks:
     default:
         attachable: true
+volumes:
+    sql-persistence:
