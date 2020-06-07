@@ -20,9 +20,7 @@ router.get("/connectToDB", async function (req, res, next) {
   //Connect to the database
   try {
     connection = await mysql.createConnection(connectionOptions);
-    let result = await connection.query(`select * from \`flower-db\``);
-    console.log(result);
-    res.send({ msg: result});
+    res.send({ msg: "Successfully connected to DB"});
   } catch (error) {
     res.status(500);
     res.send({ err: error });
