@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import '../Styling/BreedFlowers.css';
+import IndividualFlower from './IndividualFlower.js'
 
 class BreedFlowers extends Component {
   render() {
     return (
       <div className="Flowers">
-          This is the breeding component
+          <IndividualFlower/>
+          <IndividualFlower/>
       </div>
     );
   }
