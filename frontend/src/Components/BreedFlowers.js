@@ -6,8 +6,10 @@ class BreedFlowers extends Component {
   render() {
     return (
       <div className="Flowers">
-          <IndividualFlower/>
-          <IndividualFlower/>
+          <p>Flower1</p>
+          <IndividualFlower numOfGenes={4}/>
+          <p>flower2</p>
+          <IndividualFlower numOfGenes={3}/>
       </div>
     );
   }
