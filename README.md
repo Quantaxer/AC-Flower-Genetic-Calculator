@@ -11,7 +11,7 @@ This is an online calculator to determine the genetics of certain flowers for An
 
 ## How it runs
 
-This is primarily a Javascript program that uses Docker to containerize all aspects of it so that it makes running the program very easy on a local machine. It uses the React framework as the basis of the user interface, which talks to an Express backend. The express backend has endpoints which speak to certain JS scripts to perform calaculations, as well as communicating the a MySQL database when necessary.
+This is primarily a Javascript program that uses Docker to containerize all aspects of it so that it makes running the program very easy on a local machine. It uses the React framework as the basis of the user interface, which talks to an Express backend. The express backend has endpoints which speak to certain JS scripts to perform calaculations, as well as communicating with a MySQL database when necessary.
 
 ## Required Technology
 
