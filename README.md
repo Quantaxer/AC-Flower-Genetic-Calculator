@@ -36,6 +36,6 @@ To run this locally, you need to follow these steps:
 
 - Ensure that docker is installed on your computer
 - Run `docker-compose build` in the root directory
-- Run `ducker-compose up -d` in the root directory
+- Run `docker-compose up -d` in the root directory
 - Navigate to `localhost:3000` to view the webpage
   - Alternatively, you can also go to localhost:5000 to view the API endpoints
