@@ -7,16 +7,22 @@ class GeneComponent extends Component {
     this.state = {
       isChecked: "0",
     };
-
-    this.props.getState(0, this.props.identifier);
   }
 
+  // Initialize state for all components in the hierarchy
+  componentDidMount = () => {
+    this.props.getState("0", this.props.identifier);
+  };
+
+  //Handler to let the individual flower get the information from this form
   handleChange = (changeEvent) => {
+    //Set the state
     this.setState({
-      isChecked: changeEvent.currentTarget.value
+      isChecked: changeEvent.currentTarget.value,
     });
 
-    this.props.getState(changeEvent.currentTarget.value, this.props.identifier);
+     //Call the function to send info to parent
+     this.props.getState(changeEvent.currentTarget.value, this.props.identifier);
   };
 
   render() {

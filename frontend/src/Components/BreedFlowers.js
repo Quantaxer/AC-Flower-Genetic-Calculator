@@ -14,13 +14,11 @@ class BreedFlowers extends Component {
     };
   }
 
-  componentDidMount() {
-
-  }
-
+  // Handler for the submit button to begin the breeding process
   onClick = () => {
     let geneArray = [];
-    let shouldIBreed = true;
+
+    //Iterate through all the flowers and build the resulting gene string
     for (let flower of Object.values(this.state.flowerObject)) {
       let geneString = "";
       let strCount = 0;
@@ -34,11 +32,10 @@ class BreedFlowers extends Component {
       geneArray.push(geneString);
     }
 
-    if (shouldIBreed) {
-      console.log(geneArray);
-    }
+    console.log(geneArray);
   }
 
+  //Handler to get the state of a specific flower, and update this component's state
   getFlowerGenes = (flowerGenes, identifier) => {
     this.setState((prevState) => {
       let flowerObject = Object.assign({}, prevState.flowerObject);
