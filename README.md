@@ -7,6 +7,7 @@ This is an online calculator to determine the genetics of certain flowers for An
 - [AC-Flower-Genetic-Calculator](#ac-flower-genetic-calculator)
   - [How it runs](#how-it-runs)
   - [Required Technology](#required-technology)
+  - [React Component Tree](#react-component-tree)
   - [How to run locally](#how-to-run-locally)
 
 ## How it runs
@@ -16,6 +17,18 @@ This is primarily a Javascript program that uses Docker to containerize all aspe
 ## Required Technology
 
 To run this app, the only thing you need to have installed is Docker. I built this using Docker for Windows 10, and have not tested it for Linux or Mac, although I'd assume that it would work fine.
+
+## React Component Tree
+
+The following is a visual representation of the component tree for this React app. This explains the general hierarchy of which 
+
+- App (App.js)
+  - Generic Container (Container.js)
+    - Database Search Section (SearchDatabase.js)
+  - Generic Container (Container.js)
+    - Flower Breeding Section (BreedFlower.js)
+      - Individual Flower (IndividualFlower.js)
+        - Gene Selection (GeneComponent.js)
 
 ## How to run locally
 
