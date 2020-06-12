@@ -5,8 +5,10 @@ class GeneComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isChecked: 0,
+      isChecked: "0",
     };
+
+    this.props.getState(0, this.props.identifier);
   }
 
   handleChange = (changeEvent) => {

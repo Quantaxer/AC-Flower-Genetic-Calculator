@@ -8,7 +8,7 @@ class IndividualFlower extends Component {
 
     let geneMap = {};
     for (let i = 0; i < this.props.numOfGenes; i++) {
-        geneMap[i] = -1;
+        geneMap[i] = 0;
     }
 
     this.state = {
@@ -19,11 +19,14 @@ class IndividualFlower extends Component {
   getGeneState = (flowerGene, geneIdentifier) => {
     this.setState(prevState => {
       let listOfGenes = Object.assign({}, prevState.listOfGenes);
-      listOfGenes[geneIdentifier] = flowerGene;
+      listOfGenes[geneIdentifier] = parseInt(flowerGene);
       return {listOfGenes};
-    });
+    }, () => {
+        this.props.getFlower(this.state.listOfGenes, this.props.identifier);
+    }
+    )};
 
-  };
+
   render() {
     return (
       <div className="IndividualFlower">
