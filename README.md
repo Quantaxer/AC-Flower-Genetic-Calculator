@@ -29,7 +29,7 @@ The following is a visual representation of the component tree for this React ap
     - Flower Breeding Section (BreedFlower.js)
       - Individual Flower (IndividualFlower.js)
         - Gene Selection (GeneComponent.js)
-        
+
 Each main component is wrapped in a container to better isolate it from the main application. For the flower breeding component, there are individual flower components which allow the user to modify the genes of a particular flower. Each of these gene selections are themselves a component. There are two flowers available, and pressing the submit button will display the resulting flower genes and colors.
 
 The database search section allows the user to query the backend database and search for particular flowers. If they are looking for a black rose, they can enter that into the form inside the Database search section and the results will be displayed after calling an endpoint, which will look at the db container and retrieve the information.
