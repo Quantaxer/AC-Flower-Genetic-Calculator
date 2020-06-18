@@ -9,13 +9,39 @@ class BreedFlowers extends Component {
 
     this.state = {
       flower: 'Rose',
+      child: [],
       flowerObject: {
       }
     };
   }
 
+    getAPI = async (endpoint) => {
+      const response = await fetch(endpoint);
+      const body = await response.json();
+
+      if (response.status !== 200 || response.status !== 200) {
+        throw Error(body.message) 
+      }
+      return body;
+    };
+
+    postAPI = async (endpoint, postBody) => {
+        let response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(postBody)
+        });
+        const body = await response.json();
+  
+        if (response.status !== 200 || response.status !== 200) {
+          throw Error(body.message) 
+        }
+        return body;
+    };
+
   // Handler for the submit button to begin the breeding process
   onClick = () => {
+    
     let geneArray = [];
 
     //Iterate through all the flowers and build the resulting gene string
@@ -32,7 +58,13 @@ class BreedFlowers extends Component {
       geneArray.push(geneString);
     }
 
-    console.log(geneArray);
+      // Call our fetch function below once the component mounts
+    this.postAPI('/calculateChild', {flower1: geneArray[0], flower2: geneArray[1]})
+      .then(
+        //res => this.setState({ child: res.msg })
+        res => console.log(res.msg)
+      )
+      .catch(err => console.log(err));
   }
 
   //Handler to get the state of a specific flower, and update this component's state
@@ -48,10 +80,11 @@ class BreedFlowers extends Component {
     return (
       <div className="Flowers">
           <p>Flower1</p>
-          <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower1"} numOfGenes={4}/>
+          <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower1"} numOfGenes={3}/>
           <p>flower2</p>
           <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower2"} numOfGenes={3}/>
           <button onClick={this.onClick}>Breed Flowers</button>
+          <p>{this.state.child}</p>
       </div>
     );
   }
