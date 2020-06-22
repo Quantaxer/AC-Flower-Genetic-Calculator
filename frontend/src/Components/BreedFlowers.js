@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../Styling/BreedFlowers.css';
-import IndividualFlower from './IndividualFlower.js'
+import IndividualFlower from './IndividualFlower.js';
+import FlowerDropdown from './FlowerDropdown.js';
 
 class BreedFlowers extends Component {
 
@@ -8,7 +9,8 @@ class BreedFlowers extends Component {
     super(props);
 
     this.state = {
-      flower: 'Rose',
+      species: 'Tulip',
+      numOfGenes: 3,
       child: [],
       flowerObject: {
       }
@@ -76,13 +78,22 @@ class BreedFlowers extends Component {
     });
   };
 
+  //Handler to get the state of the dropdown component
+  getDropdown = (species, genes) => {
+    this.setState({
+      flower: species,
+      numOfGenes: genes
+    });
+  };
+
   render() {
     return (
       <div className="Flowers">
+          <FlowerDropdown getDropdown={this.getDropdown} />
           <p>Flower1</p>
-          <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower1"} numOfGenes={3}/>
+          <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower1"} numOfGenes={this.state.numOfGenes}/>
           <p>flower2</p>
-          <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower2"} numOfGenes={3}/>
+          <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower2"} numOfGenes={this.state.numOfGenes}/>
           <button onClick={this.onClick}>Breed Flowers</button>
           <p>{this.state.child}</p>
       </div>
