@@ -38,4 +38,16 @@ router.get("/queryDB", async function (req, res, next) {
   }
 });
 
+router.post("/getColorList", async function (req, res, next) {
+  //Connect to the database
+  try {
+    console.log(req.body);
+    let result = await connection.query(`select * from \`flower-db\``);
+    res.send({ msg: result });
+  } catch (error) {
+    res.status(500);
+    res.send({ err: error });
+  }
+});
+
 module.exports = router;
