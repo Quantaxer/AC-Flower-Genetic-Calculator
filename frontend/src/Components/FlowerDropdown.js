@@ -1,28 +1,26 @@
 import React from "react";
 import "../Styling/FlowerDropdown.css";
-import CustomComponent from '../customComponent.js';
-
+import CustomComponent from "../customComponent.js";
 
 class FlowerDropdown extends CustomComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      species: "Rose"
+      species: "Rose",
     };
   }
 
-  handleChange = async(event) => {
+  handleChange = async (event) => {
     let numOfGenes = 3;
 
-    await this.setStateAsync({species: event.target.value});
+    await this.setStateAsync({ species: event.target.value });
 
     if (this.state.species === "Rose") {
       numOfGenes = 4;
     }
     this.props.getDropdown(this.state.species, numOfGenes);
-
-  }
+  };
 
   render() {
     return (
