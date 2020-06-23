@@ -27,6 +27,7 @@ The following is a visual representation of the component tree for this React ap
     - Database Search Section (SearchDatabase.js)
   - Generic Container (Container.js)
     - Flower Breeding Section (BreedFlower.js)
+      - Species Picker (FlowerDropdown.js)
       - Individual Flower (IndividualFlower.js)
         - Gene Selection (GeneComponent.js)
 
