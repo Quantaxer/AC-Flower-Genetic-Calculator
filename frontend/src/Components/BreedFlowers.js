@@ -15,22 +15,8 @@ class BreedFlowers extends CustomComponent {
     };
   }
 
-    postAPI = async (endpoint, postBody) => {
-        let response = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(postBody)
-        });
-        const body = await response.json();
-  
-        if (response.status !== 200 || response.status !== 200) {
-          throw Error(body.message) 
-        }
-        return body;
-    };
-
   // Handler for the submit button to begin the breeding process
-  onClick = async () => {
+  breedFlowerButtonSubmit = async () => {
     
     let geneArray = [];
 
@@ -85,7 +71,7 @@ class BreedFlowers extends CustomComponent {
           <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower1"} numOfGenes={this.state.numOfGenes}/>
           <p>flower2</p>
           <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower2"} numOfGenes={this.state.numOfGenes}/>
-          <button onClick={this.onClick}>Breed Flowers</button>
+          <button onClick={this.breedFlowerButtonSubmit}>Breed Flowers</button>
           <p>{this.state.child}</p>
       </div>
     );
