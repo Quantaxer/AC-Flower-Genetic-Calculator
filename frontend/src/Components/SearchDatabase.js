@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../Styling//SearchDatabase.css';
+import CustomComponent from '../customComponent';
 
-class SearchDatabase extends Component {
+class SearchDatabase extends CustomComponent {
   render() {
     return (
       <div className="Database">

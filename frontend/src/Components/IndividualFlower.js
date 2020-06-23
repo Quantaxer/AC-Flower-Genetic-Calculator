@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import "../Styling/IndividualFlower.css";
 import GeneComponent from "./GeneComponent.js";
+import CustomComponent from '../customComponent.js';
 
-class IndividualFlower extends Component {
+class IndividualFlower extends CustomComponent {
   constructor(props) {
     super(props);
 
@@ -18,18 +19,18 @@ class IndividualFlower extends Component {
   }
 
   //Handler for BreedFlower to get state from this component on change
-  getGeneState = (flowerGene, geneIdentifier) => {
+  getGeneState = async(flowerGene, geneIdentifier) => {
+
     //Set the state
-    this.setState(prevState => {
+    await this.setStateAsync(prevState => {
       let listOfGenes = Object.assign({}, prevState.listOfGenes);
       listOfGenes[geneIdentifier] = parseInt(flowerGene);
       return {listOfGenes};
-    }, () => {
+    });
+
          //Call the function to send info to parent
         this.props.getFlower(this.state.listOfGenes, this.props.identifier);
-    }
-    )};
-
+  }
 
   render() {
     return (

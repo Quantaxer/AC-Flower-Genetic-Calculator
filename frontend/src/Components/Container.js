@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../Styling/Container.css';
+import CustomComponent from '../customComponent.js';
 
-class Container extends Component {
+class Container extends CustomComponent {
   render() {
     return (
       <div className="Container">

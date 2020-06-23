@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import "../Styling/GeneComponent.css";
+import CustomComponent from '../customComponent.js';
 
-class GeneComponent extends Component {
+class GeneComponent extends CustomComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,14 +16,12 @@ class GeneComponent extends Component {
   };
 
   //Handler to let the individual flower get the information from this form
-  handleChange = (changeEvent) => {
+  handleChange = async(changeEvent) => {
     //Set the state
-    this.setState({
-      isChecked: changeEvent.currentTarget.value,
-    });
+    await this.setStateAsync({isChecked: changeEvent.currentTarget.value});
 
      //Call the function to send info to parent
-     this.props.getState(changeEvent.currentTarget.value, this.props.identifier);
+    this.props.getState(parseInt(this.state.isChecked), this.props.identifier);
   };
 
   render() {

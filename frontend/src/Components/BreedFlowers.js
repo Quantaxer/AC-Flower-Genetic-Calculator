@@ -1,31 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../Styling/BreedFlowers.css';
 import IndividualFlower from './IndividualFlower.js';
 import FlowerDropdown from './FlowerDropdown.js';
+import CustomComponent from '../customComponent';
 
-class BreedFlowers extends Component {
-
+class BreedFlowers extends CustomComponent {
   constructor(props) {
     super(props);
 
     this.state = {
       species: 'Tulip',
       numOfGenes: 3,
-      child: [],
-      flowerObject: {
-      }
+      child: []
     };
   }
-
-    getAPI = async (endpoint) => {
-      const response = await fetch(endpoint);
-      const body = await response.json();
-
-      if (response.status !== 200 || response.status !== 200) {
-        throw Error(body.message) 
-      }
-      return body;
-    };
 
     postAPI = async (endpoint, postBody) => {
         let response = await fetch(endpoint, {
@@ -42,7 +30,7 @@ class BreedFlowers extends Component {
     };
 
   // Handler for the submit button to begin the breeding process
-  onClick = () => {
+  onClick = async () => {
     
     let geneArray = [];
 
@@ -60,13 +48,19 @@ class BreedFlowers extends Component {
       geneArray.push(geneString);
     }
 
-      // Call our fetch function below once the component mounts
-    this.postAPI('/calculateChild', {flower1: geneArray[0], flower2: geneArray[1]})
-      .then(
-        //res => this.setState({ child: res.msg })
-        res => console.log(res.msg)
-      )
-      .catch(err => console.log(err));
+    // Call our fetch function below once the component mounts
+    try {
+      let listOfChildren = await this.postAPI('/calculateChild', {flower1: geneArray[0], flower2: geneArray[1]})
+      
+      await this.setStateAsync({ childList: listOfChildren.msg })
+
+      await this.postAPI('/db/getColorList', {listOfFlowers: this.state.childList, species: this.state.species})
+
+    }
+    catch (e) {
+      console.log(e);
+    }
+    
   }
 
   //Handler to get the state of a specific flower, and update this component's state
@@ -79,11 +73,8 @@ class BreedFlowers extends Component {
   };
 
   //Handler to get the state of the dropdown component
-  getDropdown = (species, genes) => {
-    this.setState({
-      flower: species,
-      numOfGenes: genes
-    });
+  getDropdown = async (flowerSpecies, genes) => {
+    await this.setStateAsync({ species: flowerSpecies, numOfGenes: genes })
   };
 
   render() {
