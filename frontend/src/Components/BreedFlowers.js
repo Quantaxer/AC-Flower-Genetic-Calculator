@@ -2,8 +2,8 @@ import React from 'react';
 import '../Styling/BreedFlowers.css';
 import IndividualFlower from './IndividualFlower.js';
 import FlowerDropdown from './FlowerDropdown.js';
-import CustomComponent from '../customComponent';
-
+import CustomComponent from '../customComponent.js';
+import ChildFlowerComponent from './ChildFlowerComponent.js'
 class BreedFlowers extends CustomComponent {
   constructor(props) {
     super(props);
@@ -11,7 +11,7 @@ class BreedFlowers extends CustomComponent {
     this.state = {
       species: 'Tulip',
       numOfGenes: 3,
-      child: []
+      children: []
     };
   }
 
@@ -41,8 +41,11 @@ class BreedFlowers extends CustomComponent {
       await this.setStateAsync({ childList: listOfChildren.msg });
 
       let result = await this.postAPI('/db/getColorList', {listOfFlowers: this.state.childList, species: this.state.species});
-      console.log(this.state.childList);
-      console.log(result);
+      for (let childIndex in result.msg) {
+        result.msg[childIndex]["probability"] = listOfChildren.msg[result.msg[childIndex].numericGenotype];
+      }
+
+      await this.setStateAsync({ children: result.msg });
 
     }
     catch (e) {
@@ -70,11 +73,15 @@ class BreedFlowers extends CustomComponent {
       <div className="Flowers">
           <FlowerDropdown getDropdown={this.getDropdown} />
           <p>Flower1</p>
-          <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower1"} numOfGenes={this.state.numOfGenes}/>
+          <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower1"} numOfGenes={this.state.numOfGenes} species={this.state.species}/>
           <p>flower2</p>
-          <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower2"} numOfGenes={this.state.numOfGenes}/>
+          <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower2"} numOfGenes={this.state.numOfGenes} species={this.state.species}/>
           <button onClick={this.breedFlowerButtonSubmit}>Breed Flowers</button>
-          <p>{this.state.child}</p>
+          <div>
+            {Array.from(Array(this.state.children.length)).map((x, index) => (
+              <ChildFlowerComponent identifier={index} color={this.state.children[index].color} probability={this.state.children[index].probability}/>
+            ))}
+          </div>
       </div>
     );
   }
