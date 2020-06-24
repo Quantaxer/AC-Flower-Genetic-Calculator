@@ -14,8 +14,30 @@ class IndividualFlower extends CustomComponent {
     }
 
     this.state = {
+      color: "",
       listOfGenes: geneMap,
     };
+  }
+
+  calculateColor = async() => {
+    let geneString = "";
+    let strCount = 0;
+    for (let geneSequence of Object.entries(this.state.listOfGenes)) {
+      geneString = geneString + geneSequence[1];
+      if (strCount < (Object.entries(this.state.listOfGenes).length - 1)) {
+        geneString = geneString + '-';
+      }
+      strCount++;
+    }
+
+    let obj = {};
+    obj[geneString] = 0;
+    let result = await this.postAPI('/db/getColorList', {listOfFlowers: obj, species: this.props.species});
+    await this.setStateAsync({color: result.msg[0].color});
+  }
+
+  async componentDidMount() {
+    await this.calculateColor();
   }
 
   //Handler for BreedFlower to get state from this component on change
@@ -27,6 +49,8 @@ class IndividualFlower extends CustomComponent {
       return { listOfGenes };
     });
 
+    await this.calculateColor();
+
     //Call the function to send info to parent
     this.props.getFlower(this.state.listOfGenes, this.props.identifier);
   };
@@ -34,6 +58,7 @@ class IndividualFlower extends CustomComponent {
   render() {
     return (
       <div className="IndividualFlower">
+        <p>{this.state.color}</p>
         {Array.from(Array(this.props.numOfGenes)).map((x, index) => (
           <GeneComponent getState={this.getGeneState} identifier={index} />
         ))}
