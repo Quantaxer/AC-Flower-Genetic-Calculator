@@ -30,6 +30,7 @@ The following is a visual representation of the component tree for this React ap
       - Species Picker (FlowerDropdown.js)
       - Individual Flower (IndividualFlower.js)
         - Gene Selection (GeneComponent.js)
+      - Children of parents (ChildFlowerComponent.js)
 
 Each main component is wrapped in a container to better isolate it from the main application. For the flower breeding component, there are individual flower components which allow the user to modify the genes of a particular flower. Each of these gene selections are themselves a component. There are two flowers available, and pressing the submit button will display the resulting flower genes and colors.
 
