@@ -39,10 +39,23 @@ router.get("/queryDB", async function (req, res, next) {
 });
 
 router.post("/getColorList", async function (req, res, next) {
-  //Connect to the database
+  let arrayOfChildrenGenes = Object.keys(req.body.listOfFlowers);
   try {
-    console.log(req.body);
-    let result = await connection.query(`select * from \`flower-db\``);
+    //Build the query string
+    let queryString = "select * from `flower-db` where numericGenotype in ";
+    let numericGenotypeString = "(";
+    //Build the list of genes to include in the list for the query
+    for (let i = 0; i < arrayOfChildrenGenes.length; i++) {
+      numericGenotypeString = numericGenotypeString + "'" + arrayOfChildrenGenes[i] + "'";
+      if (i < arrayOfChildrenGenes.length - 1) {
+        numericGenotypeString = numericGenotypeString + ", ";
+      }
+    }
+
+    //Specify the species
+    numericGenotypeString = numericGenotypeString + ") and species = '" + req.body.species + "'";
+
+    let result = await connection.query(queryString + numericGenotypeString);
     res.send({ msg: result });
   } catch (error) {
     res.status(500);

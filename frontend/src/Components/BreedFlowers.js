@@ -36,11 +36,13 @@ class BreedFlowers extends CustomComponent {
 
     // Call our fetch function below once the component mounts
     try {
-      let listOfChildren = await this.postAPI('/calculateChild', {flower1: geneArray[0], flower2: geneArray[1]})
+      let listOfChildren = await this.postAPI('/calculateChild', {flower1: geneArray[0], flower2: geneArray[1]});
       
-      await this.setStateAsync({ childList: listOfChildren.msg })
+      await this.setStateAsync({ childList: listOfChildren.msg });
 
-      await this.postAPI('/db/getColorList', {listOfFlowers: this.state.childList, species: this.state.species})
+      let result = await this.postAPI('/db/getColorList', {listOfFlowers: this.state.childList, species: this.state.species});
+      console.log(this.state.childList);
+      console.log(result);
 
     }
     catch (e) {
