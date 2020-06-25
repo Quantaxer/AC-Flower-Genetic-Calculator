@@ -6,7 +6,7 @@ class ChildFlower extends CustomComponent {
   render() {
     return (
         <div className="ChildFlower">
-            <p>{this.props.color}, {this.props.probability}</p>
+            <p>{this.props.color}</p>
         </div>
     )}
 }

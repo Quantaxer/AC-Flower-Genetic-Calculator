@@ -45,7 +45,23 @@ class BreedFlowers extends CustomComponent {
         result.msg[childIndex]["probability"] = listOfChildren.msg[result.msg[childIndex].numericGenotype];
       }
 
-      await this.setStateAsync({ children: result.msg });
+      let colorArray = {};
+      for (let i in result.msg) {
+        let color = result.msg[i].color
+        if (colorArray[color] === undefined) {
+          colorArray[color] = {};
+          colorArray[color]['color'] = result.msg[i].color;
+          colorArray[color]['listOfFlowers'] = [];
+          colorArray[color]['listOfFlowers'].push(result.msg[i]);
+        }
+        else {
+          colorArray[color]['listOfFlowers'].push(result.msg[i]);
+        }
+      }
+
+      await this.setStateAsync({ children: Object.values(colorArray) });
+
+      console.log(this.state.children);
 
     }
     catch (e) {
@@ -79,7 +95,7 @@ class BreedFlowers extends CustomComponent {
           <button onClick={this.breedFlowerButtonSubmit}>Breed Flowers</button>
           <div>
             {Array.from(Array(this.state.children.length)).map((x, index) => (
-              <ChildFlowerComponent identifier={index} color={this.state.children[index].color} probability={this.state.children[index].probability}/>
+              <ChildFlowerComponent identifier={index} color={this.state.children[index].color} listOfChildren={this.state.children[index].listOfFlowers}/>
             ))}
           </div>
       </div>
