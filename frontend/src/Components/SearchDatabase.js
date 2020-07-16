@@ -4,7 +4,7 @@ import CustomComponent from "../customComponent";
 
 class SearchDatabase extends CustomComponent {
   render() {
-    return <div className="Database">This is a database component</div>;
+    return <div className="Database"></div>;
   }
 }
 

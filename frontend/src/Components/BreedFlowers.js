@@ -52,6 +52,7 @@ class BreedFlowers extends CustomComponent {
         if (colorArray[color] === undefined) {
           colorArray[color] = {};
           colorArray[color]['color'] = result.msg[i].color;
+          colorArray[color]['species'] = result.msg[i].species;
           colorArray[color]['listOfFlowers'] = [];
           colorArray[color]['listOfFlowers'].push(result.msg[i]);
         }
@@ -59,16 +60,12 @@ class BreedFlowers extends CustomComponent {
           colorArray[color]['listOfFlowers'].push(result.msg[i]);
         }
       }
-
       await this.setStateAsync({ children: Object.values(colorArray) });
-
-      console.log(this.state.children);
 
     }
     catch (e) {
       console.log(e);
     }
-    
   }
 
   //Handler to get the state of a specific flower, and update this component's state
@@ -88,6 +85,7 @@ class BreedFlowers extends CustomComponent {
   render() {
     return (
       <div className="breedFlowerModule">
+          <h2>Select Flower Breed</h2>
           <FlowerDropdown getDropdown={this.getDropdown} />
           <div className="Flowers">
             <div className="flower1">
@@ -97,10 +95,12 @@ class BreedFlowers extends CustomComponent {
               <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower2"} numOfGenes={this.state.numOfGenes} species={this.state.species}/>
             </div>
           </div>
-          <Button onClick={this.breedFlowerButtonSubmit}>Breed Flowers</Button>
-          <div>
+          <Button color="rose" onClick={this.breedFlowerButtonSubmit}>Breed Flowers</Button>
+          <div className="grid">
             {Array.from(Array(this.state.children.length)).map((x, index) => (
-              <ChildFlowerComponent identifier={index} color={this.state.children[index].color} listOfChildren={this.state.children[index].listOfFlowers}/>
+              <div className="gridChild">
+                <ChildFlowerComponent identifier={index} species={this.state.children[index].species} color={this.state.children[index].color} listOfChildren={this.state.children[index].listOfFlowers}/>
+              </div>
             ))}
           </div>
       </div>
