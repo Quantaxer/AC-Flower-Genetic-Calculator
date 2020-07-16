@@ -1,15 +1,28 @@
 .BreedFlowerModule {
-    text-align: center;
+  text-align: center;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.gridChild {
+  text-align: center;
+  flex: 0 0 calc(16.66% - 20px);
+  padding: 10px;
 }
 
 .Flowers {
-    display: flex;
-  }
-  
-  .flower1 {
-    flex: 0 0 50%;
-  }
-  
-  .flower2 {
-    flex: 1;
-  }
+  display: flex;
+}
+
+.flower1 {
+  flex: 0 0 60%;
+}
+
+.flower2 {
+  flex: 0 0 20%;
+}
+

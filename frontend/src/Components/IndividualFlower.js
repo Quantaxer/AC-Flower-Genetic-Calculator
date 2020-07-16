@@ -58,7 +58,7 @@ class IndividualFlower extends CustomComponent {
   render() {
     return (
       <div className="IndividualFlower">
-        <p>{this.state.color} {this.props.species}</p>
+        <h3>{this.state.color} {this.props.species}</h3>
         {Array.from(Array(this.props.numOfGenes)).map((x, index) => (
           <GeneComponent getState={this.getGeneState} identifier={index} />
         ))}

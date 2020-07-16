@@ -36,8 +36,6 @@ class App extends Component {
         <Container>
           <BreedFlowers />
         </Container>
-
-        <p className="App-intro">{this.state.data}</p>
       </div>
     );
   }

@@ -28,10 +28,11 @@ class FlowerDropdown extends CustomComponent {
       <div className="FlowerDropdown">
         <CustomDropdown
           buttonText={this.state.species}
+          hoverColor="rose"
           buttonProps={{
             round: true,
             onChange: this.handleChange,
-            color: "info",
+            color: "rose",
           }}
           onClick={(menuItem) => this.handleChange(menuItem)}
           dropdownList={[
