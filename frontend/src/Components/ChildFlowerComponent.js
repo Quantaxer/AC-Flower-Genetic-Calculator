@@ -7,6 +7,17 @@ import CustomComponent from "../customComponent.js";
 class ChildFlower extends CustomComponent {
   constructor(props) {
     super(props);
+    this.colorMapping = {
+      "Red": "Red",
+      "White": "White",
+      "Yellow": "Gold",
+      "Pink": "DeepPink",
+      "Orange": "DarkOrange",
+      "Black": "Black",
+      "Blue": "DodgerBlue",
+      "Green": "LimeGreen",
+      "Purple": "DarkViolet"
+    }
     this.state = {
       totalPercentage: 0,
     };
@@ -22,9 +33,10 @@ class ChildFlower extends CustomComponent {
     return (
       <div className="ChildFlower">
         <Card style={{ width: "20rem" }}>
-          <p>
+        <div style={{padding: "5px", backgroundColor: this.colorMapping[this.props.color]}}> </div>
+          <h3>
             {this.props.color} {this.props.species}: {this.state.totalPercentage}%
-          </p>
+          </h3>
           <CardBody>
             <h3>Breakdown of genes</h3>
             {this.props.listOfChildren.map((child) => (
