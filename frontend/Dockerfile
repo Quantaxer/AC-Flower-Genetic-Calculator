@@ -4,15 +4,11 @@ WORKDIR /app
 
 # install app dependencies
 COPY package.json /app
-COPY package-lock.json /app
 
 # add app
 COPY . /app
 
 RUN npm install --silent
-RUN npm install @material-ui/core
-RUN npm install @material-ui/icons
-RUN npm install react-scripts --silent
 
 RUN npm run build
 
