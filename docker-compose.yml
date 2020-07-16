@@ -3,8 +3,6 @@ version: "3.3"
 services:
     mysql:
         image: mariadb
-        env_file:
-            - 'variables.env'
         environment:
             MYSQL_USER: user
             MYSQL_PASSWORD: password

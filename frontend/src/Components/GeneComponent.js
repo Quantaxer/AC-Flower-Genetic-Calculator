@@ -1,12 +1,13 @@
 import React from "react";
 import "../Styling/GeneComponent.css";
+import Radio from "@material-ui/core/Radio";
 import CustomComponent from "../customComponent.js";
 
 class GeneComponent extends CustomComponent {
   constructor(props) {
     super(props);
     this.state = {
-      isChecked: "0",
+      isChecked: "0"
     };
   }
 
@@ -25,12 +26,28 @@ class GeneComponent extends CustomComponent {
   };
 
   render() {
+
     return (
       <div className="GeneRow">
         <div className="option">
-          <input type="radio" value="0" checked={this.state.isChecked === "0"} onChange={this.handleChange}/> 0
-          <input type="radio" value="1" checked={this.state.isChecked === "1"} onChange={this.handleChange}/> 1
-          <input type="radio" value="2" checked={this.state.isChecked === "2"} onChange={this.handleChange}/>2
+          <Radio
+            value="0"
+            checked={this.state.isChecked === "0"}
+            onChange={this.handleChange}
+          />
+          0
+          <Radio
+            value="1"
+            checked={this.state.isChecked === "1"}
+            onChange={this.handleChange}
+          />
+          1
+          <Radio
+            value="2"
+            checked={this.state.isChecked === "2"}
+            onChange={this.handleChange}
+          />
+          2
         </div>
       </div>
     );

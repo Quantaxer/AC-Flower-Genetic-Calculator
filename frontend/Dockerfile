@@ -10,6 +10,8 @@ COPY package-lock.json /app
 COPY . /app
 
 RUN npm install --silent
+RUN npm install @material-ui/core
+RUN npm install @material-ui/icons
 RUN npm install react-scripts --silent
 
 RUN npm run build

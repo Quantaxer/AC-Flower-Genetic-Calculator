@@ -1,3 +1,15 @@
-.Flowers {
+.BreedFlowerModule {
     text-align: center;
 }
+
+.Flowers {
+    display: flex;
+  }
+  
+  .flower1 {
+    flex: 0 0 50%;
+  }
+  
+  .flower2 {
+    flex: 1;
+  }

@@ -1,4 +1,5 @@
 import React from "react";
+import CustomDropdown from "../assets/jss/CustomDropdown";
 import "../Styling/FlowerDropdown.css";
 import CustomComponent from "../customComponent.js";
 
@@ -7,14 +8,14 @@ class FlowerDropdown extends CustomComponent {
     super(props);
 
     this.state = {
-      species: "Rose",
+      species: "Tulip",
     };
   }
 
   handleChange = async (event) => {
     let numOfGenes = 3;
 
-    await this.setStateAsync({ species: event.target.value });
+    await this.setStateAsync({ species: event});
 
     if (this.state.species === "Rose") {
       numOfGenes = 4;
@@ -25,16 +26,25 @@ class FlowerDropdown extends CustomComponent {
   render() {
     return (
       <div className="FlowerDropdown">
-        <select value={this.state.flower} onChange={this.handleChange}>
-          <option value="Tulip">Tulip</option>
-          <option value="Rose">Rose</option>
-          <option value="Cosmo">Cosmo</option>
-          <option value="Lily">Lily</option>
-          <option value="Pansy">Pansy</option>
-          <option value="Hyacinth">Hyacinth</option>
-          <option value="Mum">Mum</option>
-          <option value="Windflower">Windflower</option>
-        </select>
+        <CustomDropdown
+          buttonText={this.state.species}
+          buttonProps={{
+            round: true,
+            onChange: this.handleChange,
+            color: "info",
+          }}
+          onClick={(menuItem) => this.handleChange(menuItem)}
+          dropdownList={[
+            "Tulip",
+            "Rose",
+            "Cosmo",
+            "Lily",
+            "Pansy",
+            "Hyacinth",
+            "Mum",
+            "Windflower",
+          ]}
+        />
       </div>
     );
   }

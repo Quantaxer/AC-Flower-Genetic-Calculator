@@ -1,5 +1,6 @@
 import React from 'react';
 import '../Styling/BreedFlowers.css';
+import Button from "../assets/jss/Button"
 import IndividualFlower from './IndividualFlower.js';
 import FlowerDropdown from './FlowerDropdown.js';
 import CustomComponent from '../customComponent.js';
@@ -86,13 +87,17 @@ class BreedFlowers extends CustomComponent {
 
   render() {
     return (
-      <div className="Flowers">
+      <div className="breedFlowerModule">
           <FlowerDropdown getDropdown={this.getDropdown} />
-          <p>Flower1</p>
-          <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower1"} numOfGenes={this.state.numOfGenes} species={this.state.species}/>
-          <p>flower2</p>
-          <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower2"} numOfGenes={this.state.numOfGenes} species={this.state.species}/>
-          <button onClick={this.breedFlowerButtonSubmit}>Breed Flowers</button>
+          <div className="Flowers">
+            <div className="flower1">
+              <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower1"} numOfGenes={this.state.numOfGenes} species={this.state.species}/>
+            </div>
+            <div className="flower2">
+              <IndividualFlower getFlower={this.getFlowerGenes} identifier={"flower2"} numOfGenes={this.state.numOfGenes} species={this.state.species}/>
+            </div>
+          </div>
+          <Button onClick={this.breedFlowerButtonSubmit}>Breed Flowers</Button>
           <div>
             {Array.from(Array(this.state.children.length)).map((x, index) => (
               <ChildFlowerComponent identifier={index} color={this.state.children[index].color} listOfChildren={this.state.children[index].listOfFlowers}/>
