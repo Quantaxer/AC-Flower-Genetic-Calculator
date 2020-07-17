@@ -22,13 +22,27 @@ class ChildFlower extends CustomComponent {
       totalPercentage: 0,
     };
   }
-  async componentDidMount() {
+
+  updateTotalPercentage = async function() {
     let totalPercent = 0;
+    console.log("Starting calculation");
     for (let child of this.props.listOfChildren) {
+      console.log(child.probability);
       totalPercent = totalPercent + child.probability;
     }
     await this.setStateAsync({ totalPercentage: totalPercent });
   }
+
+  async componentDidMount() {
+    await this.updateTotalPercentage();
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (this.props.listOfChildren !== prevProps.listOfChildren) {
+      await this.updateTotalPercentage();
+    }
+  }
+
   render() {
     return (
       <div className="ChildFlower">
