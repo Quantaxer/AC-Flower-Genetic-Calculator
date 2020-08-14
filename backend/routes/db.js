@@ -19,7 +19,7 @@ router.get("/", async function (req, res, next) {
 router.get("/connectToDB", async function (req, res, next) {
   //Connect to the database
   try {
-    connection = await mysql.createConnection(connectionOptions);
+    connection = await mysql.createPool(connectionOptions);
     res.send({ msg: "Successfully connected to DB"});
   } catch (error) {
     res.status(500);
