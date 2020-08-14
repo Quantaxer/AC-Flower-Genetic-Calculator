@@ -2,6 +2,7 @@ import React from "react";
 import "../Styling/IndividualFlower.css";
 import GeneComponent from "./GeneComponent.js";
 import CustomComponent from "../customComponent.js";
+import flowerIcon from "../assets/flower_seeded_icon.png";
 
 class IndividualFlower extends CustomComponent {
   constructor(props) {
@@ -15,6 +16,7 @@ class IndividualFlower extends CustomComponent {
 
     this.state = {
       color: "",
+      seeded: 0,
       geneMapping: geneMap,
     };
   }
@@ -31,7 +33,7 @@ class IndividualFlower extends CustomComponent {
     let obj = {};
     obj[geneString] = 0;
     let result = await this.postAPI('/db/getColorList', {listOfFlowers: obj, species: this.props.species});
-    await this.setStateAsync({color: result.msg[0].color});
+    await this.setStateAsync({color: result.msg[0].color, seeded: result.msg[0].seeded});
   }
 
   //Handler for BreedFlower to get state from this component on change
@@ -53,7 +55,7 @@ class IndividualFlower extends CustomComponent {
   render() {
     return (
       <div className="IndividualFlower">
-        <h3>{this.state.color} {this.props.species}</h3>
+        <h3> {(this.state.seeded === 1) ? <img width="20px" height="20px" src={flowerIcon} alt="Flower seeds icon indicating a flower is sold as seeds in Nook's Shop"/> : ""} {this.state.color} {this.props.species}</h3>
         {Array.from(Array(this.props.numOfGenes)).map((x, index) => (
           <GeneComponent getState={this.getGeneState} identifier={index} />
         ))}

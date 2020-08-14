@@ -3,6 +3,7 @@ import "../Styling/Container.css";
 import Card from "../assets/jss/Card";
 import CardBody from "../assets/jss/CardBody";
 import CustomComponent from "../customComponent.js";
+import flowerIcon from "../assets/flower_seeded_icon.png";
 
 class ChildFlower extends CustomComponent {
   constructor(props) {
@@ -50,9 +51,8 @@ class ChildFlower extends CustomComponent {
         <Card style={{ width: "20rem" }}>
         <div style={{padding: "5px", backgroundColor: this.colorMapping[this.props.color]}}> </div>
           <h3>
-            {this.props.color} {this.props.species}: {this.state.totalPercentage}%
+          {(this.props.seeded === 1) ? <img width="15px" height="15px" src={flowerIcon} alt="Flower seeds icon indicating a flower is sold as seeds in Nook's Shop"/> : ""} {this.props.color} {this.props.species}: {this.state.totalPercentage}%
           </h3>
-          {(this.props.seeded === 1) ? "Sold as seeds" : ""}
           <CardBody>
             <h3>Breakdown of genes</h3>
             {this.props.listOfChildren.map((child) => (
