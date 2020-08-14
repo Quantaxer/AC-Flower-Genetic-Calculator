@@ -7,7 +7,7 @@ class IndividualFlower extends CustomComponent {
   constructor(props) {
     super(props);
 
-    // Initialize gene mapping for the state
+    // map of a list of the flower's genes: based on the total number of genes of the species of flower
     let geneMap = {};
     for (let i = 0; i < this.props.numOfGenes; i++) {
       geneMap[i] = 0;
@@ -15,46 +15,41 @@ class IndividualFlower extends CustomComponent {
 
     this.state = {
       color: "",
-      listOfGenes: geneMap,
+      geneMapping: geneMap,
     };
-  }
-
-  calculateColor = async() => {
-    let geneString = "";
-    let strCount = 0;
-    for (let geneSequence of Object.entries(this.state.listOfGenes)) {
-      geneString = geneString + geneSequence[1];
-      if (strCount < (Object.entries(this.state.listOfGenes).length - 1)) {
-        geneString = geneString + '-';
-      }
-      strCount++;
-    }
-
-    let obj = {};
-    obj[geneString] = 0;
-    let result = await this.postAPI('/db/getColorList', {listOfFlowers: obj, species: this.props.species});
-    await this.setStateAsync({color: result.msg[0].color});
   }
 
   async componentDidMount() {
     await this.calculateColor();
   }
 
+  calculateColor = async() => {
+    //Convert the gene map into a string
+    let geneString = this.hyphenateGeneString(this.state.geneMapping);
+
+    //Send the gene combination and species to the database to get the color of the flower
+    let obj = {};
+    obj[geneString] = 0;
+    let result = await this.postAPI('/db/getColorList', {listOfFlowers: obj, species: this.props.species});
+    await this.setStateAsync({color: result.msg[0].color});
+  }
+
   //Handler for BreedFlower to get state from this component on change
   getGeneState = async (flowerGene, geneIdentifier) => {
     //Set the state
     await this.setStateAsync((prevState) => {
-      let listOfGenes = Object.assign({}, prevState.listOfGenes);
-      listOfGenes[geneIdentifier] = parseInt(flowerGene);
-      return { listOfGenes };
+      let geneMapping = Object.assign({}, prevState.geneMapping);
+      geneMapping[geneIdentifier] = parseInt(flowerGene);
+      return { geneMapping };
     });
 
     await this.calculateColor();
 
-    //Call the function to send info to parent
-    this.props.getFlower(this.state.listOfGenes, this.props.identifier);
+    //Call the function to send info to BreedFlowers.js
+    this.props.getFlower(this.state.geneMapping, this.props.identifier);
   };
 
+  //Component render
   render() {
     return (
       <div className="IndividualFlower">

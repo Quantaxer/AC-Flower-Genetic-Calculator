@@ -20,6 +20,21 @@ class CustomComponent extends Component {
     }
     return body;
   };
+
+  //This is responsible for converting the genes of the flower in a map representation into a string the database will recognize
+  //Basically just turning a map int oa string with hyphens.
+  hyphenateGeneString = (flowerGeneMap) => {
+    let strCount = 0;
+    let result = "";
+    for (let geneSequence of Object.entries(flowerGeneMap)) {
+      result = result + geneSequence[1];
+      if (strCount < (Object.entries(flowerGeneMap).length - 1)) {
+        result = result + '-';
+      }
+      strCount++;
+    }
+    return result;
+  };
 }
 
 export default CustomComponent;

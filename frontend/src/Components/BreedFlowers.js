@@ -22,37 +22,31 @@ class BreedFlowers extends CustomComponent {
     let geneArray = [];
 
     //Iterate through all the flowers and build the resulting gene string
-    for (let flower of Object.values(this.state.flowerObject)) {
-      let geneString = "";
-      let strCount = 0;
-      for (let geneSequence of Object.entries(flower)) {
-        geneString = geneString + geneSequence[1];
-        if (strCount < (Object.entries(flower).length - 1)) {
-          geneString = geneString + '-';
-        }
-        strCount++;
-      }
-      geneArray.push(geneString);
+    for (let flowerGeneMap of Object.values(this.state.flowerObject)) {
+      geneArray.push(this.hyphenateGeneString(flowerGeneMap));
     }
 
-    // Call our fetch function below once the component mounts
     try {
+      //Calcualte the genetics of the child flower, then get the color for every resulting possible child.
       let listOfChildren = await this.postAPI('/calculateChild', {flower1: geneArray[0], flower2: geneArray[1]});
       
       await this.setStateAsync({ childList: listOfChildren.msg });
 
       let result = await this.postAPI('/db/getColorList', {listOfFlowers: this.state.childList, species: this.state.species});
-      for (let childIndex in result.msg) {
-        result.msg[childIndex]["probability"] = listOfChildren.msg[result.msg[childIndex].numericGenotype];
+      for (let i in result.msg) {
+        result.msg[i]["probability"] = listOfChildren.msg[result.msg[i].numericGenotype];
       }
+
 
       let colorArray = {};
       for (let i in result.msg) {
         let color = result.msg[i].color
+        //If the color is not in the map, add it with new values. Otherwise simply put that flower with the respective color.
         if (colorArray[color] === undefined) {
           colorArray[color] = {};
           colorArray[color]['color'] = result.msg[i].color;
           colorArray[color]['species'] = result.msg[i].species;
+          colorArray[color]['seeded'] = result.msg[i].seeded;
           colorArray[color]['listOfFlowers'] = [];
           colorArray[color]['listOfFlowers'].push(result.msg[i]);
         }
@@ -99,7 +93,7 @@ class BreedFlowers extends CustomComponent {
           <div className="grid">
             {Array.from(Array(this.state.children.length)).map((x, index) => (
               <div className="gridChild">
-                <ChildFlowerComponent identifier={index} species={this.state.children[index].species} color={this.state.children[index].color} listOfChildren={this.state.children[index].listOfFlowers}/>
+                <ChildFlowerComponent identifier={index} species={this.state.children[index].species} seeded={this.state.children[index].seeded} color={this.state.children[index].color} listOfChildren={this.state.children[index].listOfFlowers}/>
               </div>
             ))}
           </div>
